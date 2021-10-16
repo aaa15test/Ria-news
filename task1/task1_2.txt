@@ -1,0 +1,55 @@
+//Задача: я хочу хранить свою библиотеку в БД. Меня волнуют названия книг и авторы — 
+//больше ничего хранить не надо. Предложите структуру таблиц.
+
+//создание БД
+CREATE DATABASE authors;
+
+//обратимся к БД authors
+USE authors
+
+//создадим таблицу author_id, где первое поле - id автора (первичный ключ), 
+//а второе поле - имя автора
+CREATE TABLE author_id (id int(20) AUTO_INCREMENT, author_name VARCHAR(20) NOT NULL, PRIMARY KEY(id));
+
+//заполним таблицу author_id данными из файла author_id.txt
+LOAD DATA LOCAL INFILE "C:\\Users\\user\\Desktop\\my_directory\\author_id.txt" INTO TABLE author_id;
+
+//создадим таблицу book_id, где первое поле - id книги (первичный ключ), второе - название книги.
+//Поле id_book является внешним ключом, т.е. оно может иметь только те значения, которые есть в поле id таблицы author,
+//поэтому для него используется FOREIGN KEY
+CREATE TABLE book_id (id_book int(20) AUTO_INCREMENT, book_name VARCHAR(30) NOT NULL, PRIMARY KEY(id_book), FOREIGN KEY (id_book) REFERENCES author_id (id));
+
+//заполним таблицу author_id данными из файла book_id.txt
+LOAD DATA LOCAL INFILE "C:\\Users\\user\\Desktop\\my_directory\\book_id.txt" INTO TABLE book_id;
+
+
+
+//****************************************************************************//
+//book_id.txt
+
+1	Евгений Онегин
+2	Триумфальная арка
+3	Мартин Иден
+4	Анна Каренина
+2	Три товарища
+5	Вишневый сад
+6	Великий Гэстби
+7	Герой нашего времени
+8	Ревизор
+9	Немой свидетель
+5	Толстый и тонкий
+1	Метель
+
+
+//*****************************************************************************//
+//author_id.txt
+
+1	Пушкин
+2	Ремарк
+3	Джен Лондон
+4	Толстой
+5	Чехов
+6	Фицджеральд
+7	Лермонтов
+8	Гоголь
+9	Агата Кристи
